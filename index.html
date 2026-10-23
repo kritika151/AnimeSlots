@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b1b">
+  <title>AnimeSlots — Anime Arcade</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <div id="anime-loader" class="anime-loader" role="status" aria-label="Loading AnimeSlots">
+    <div class="loader-moon"></div>
+    <div class="loader-sigil">✦</div>
+    <p class="loader-kicker">ANIME ARCADE PRESENTS</p>
+    <h1>Anime<span>Slots</span></h1>
+    <p class="loader-subtitle">Your next adventure awaits...</p>
+    <div class="loader-track"><span></span></div>
+    <button id="skip-loader" type="button">SKIP INTRO ↗</button>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#"><span>✿</span> AnimeSlots</a>
+    <nav>
+      <button data-view="all" class="nav-btn active">Home</button>
+      <button data-view="favorites" class="nav-btn">♡ Favorites</button>
+      <button data-view="portfolio" class="nav-btn">✦ Portfolio</button>
+      <button data-view="progress" class="nav-btn">🏆 Progress</button>
+      <button data-view="shop" class="nav-btn">🛍️ Shop</button>
+      <button data-view="settings" class="nav-btn">Settings</button>
+    </nav>
+    <div class="wallet">
+      <div class="balance">&#x1F420; <b id="balance">250</b></div>
+      <div class="refill" id="refill-status" aria-live="polite">Credits full</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">✦ YOUR ANIME ARCADE ✦</p>
+        <h1>YOUR NEXT<br><span>LUCKY SPIN</span></h1>
+        <p>Enter a world of anime, fantasy and neon dreams.</p>
+        <button class="primary" id="explore">Explore Games ↗</button>
+        <div class="hero-note">🌸 FREE TO PLAY · VIRTUAL CREDITS ONLY</div>
+      </div>
+      <div class="hero-art">
+        <div class="moon"></div>
+        <div class="torii">鳥居</div>
+        <div class="sakura">🌸 ✿ 🌸</div>
+        <div class="hero-caption">桜の夢<br><small>SAKURA DREAMS</small></div>
+      </div>
+    </section>
+
+    <section class="library" id="library">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FIND YOUR ADVENTURE</p>
+          <h2>Game Library ✦</h2>
+        </div>
+        <span id="game-count">8 GAMES</span>
+      </div>
+      <input id="search" class="search" type="search"
+        placeholder="⌕ Search games..." aria-label="Search games">
+      <div class="filters">
+        <button class="filter active" data-filter="All">All</button>
+        <button class="filter" data-filter="Anime">Anime</button>
+        <button class="filter" data-filter="Fantasy">Fantasy</button>
+        <button class="filter" data-filter="Classic">Classic</button>
+        <button class="filter" data-filter="Favorites">♥ Favorites</button>
+      </div>
+      <div id="games" class="games"></div>
+      <p id="empty-state" hidden>No games found. Try another search.</p>
+    </section>
+
+    <section class="play-panel" id="play-panel" hidden>
+      <div class="play-head">
+        <div>
+          <p class="eyebrow">NOW PLAYING</p>
+          <h2 id="playing-title">Sakura Fortune</h2>
+        </div>
+        <button id="close-game" class="icon-btn" aria-label="Close game">✕</button>
+      </div>
+      <p id="game-description">Your adventure starts here.</p>
+      <div class="machine">
+        <div class="machine-title">✿ <span id="machine-title">SAKURA FORTUNE</span> ✿</div>
+        <div id="reels" class="reels">
+          <div>🌸</div><div>⛩️</div><div>🦊</div>
+        </div>
+        <p id="result" role="status" aria-live="polite">Ready when you are!</p>
+        <div class="paytable">3 MATCH = 5× BET · ANY PAIR = 2× BET</div>
+      </div>
+      <div class="controls">
+        <label>YOUR BET
+          <select id="bet">
+            <option value="10">10 credits</option>
+            <option value="25" selected>25 credits</option>
+            <option value="50">50 credits</option>
+            <option value="100">100 credits</option>
+          </select>
+        </label>
+        <button class="primary spin" id="spin">✦ SPIN ✦</button>
+      </div>
+      <div class="game-tools">
+        <button id="sound-toggle" class="tool-btn" aria-pressed="false">🔇 Sound off</button>
+        <span>Virtual credits only.</span>
+      </div>
+      <p class="disclaimer">No deposits, cash prizes or real-money betting. Have fun!</p>
+    </section>
+  
+
+    <section class="progress-page" id="progress-page" hidden>
+      <div class="progress-heading">
+        <p class="dev-kicker">YOUR ADVENTURE</p>
+        <h2>🏆 Player Progress</h2>
+        <p>Play, complete missions, and collect achievements.</p>
+      </div>
+      <div class="progress-card">
+        <div class="progress-top">
+          <div>
+            <span class="muted-label">CURRENT RANK</span>
+            <h3 id="player-rank">🌱 Newcomer</h3>
+          </div>
+          <div class="level-badge">LV <b id="player-level">1</b></div>
+        </div>
+        <div class="xp-line">
+          <span id="xp-label">0 / 100 XP</span>
+          <span id="xp-percent">0%</span>
+        </div>
+        <div class="xp-track"><div id="xp-fill"></div></div>
+        <p id="player-total">Lifetime XP: 0</p>
+      </div>
+      <h3>📜 Missions</h3>
+      <div id="missions" class="mission-list"></div>
+      <h3>🏅 Achievements</h3>
+      <div id="achievements" class="achievement-list"></div>
+    </section>
+
+    <section class="shop-page" id="shop-page" hidden>
+      <div class="shop-heading">
+        <p class="eyebrow">✦ CUSTOMIZE YOUR ARCADE ✦</p>
+        <h2>🛍️ Rewards Shop</h2>
+        <p>Spend credits on boosts, refills, and helpful arcade items.</p>
+      </div>
+      <div id="shop-balance" class="shop-balance"></div>
+      <div id="shop-items" class="shop-items"></div>
+      <p id="shop-message" role="status" aria-live="polite"></p>
+    </section>
+
+    
+<section class="settings-page" id="settings-page" hidden>
+  <h2>Settings</h2>
+  <div class="settings-card">
+    <h3>Save Progress</h3>
+    <p>When enabled, your balance, favorites, inventory and progress are saved on this device.</p>
+    <label class="settings-toggle">
+      <input id="save-progress-toggle" type="checkbox" checked>
+      <span>Save progress on this device</span>
+    </label>
+    <p id="save-status" aria-live="polite">Saving is enabled.</p>
+  </div>
+  <div class="settings-card">
+    <h3>Arcade Sound Effects</h3>
+    <p>Play slot-machine sounds while spinning and when you win.</p>
+    <label class="settings-toggle">
+      <input id="sound-effects-toggle" type="checkbox" checked>
+      <span>Enable arcade sounds</span>
+    </label>
+    <p id="sound-status" aria-live="polite">Arcade sound effects are enabled.</p>
+  </div>
+  <div class="settings-card">
+    <h3>Reset Everything</h3>
+    <p>Reset balance, level, XP, inventory, missions, achievements, favorites and refill timer.</p>
+    <button id="reset-everything" class="settings-danger" type="button">Reset Everything</button>
+  </div>
+</section>
+
+<section class="developer" id="developer" hidden>
+      <div class="dev-label">✦ BEHIND THE PIXELS ✦</div>
+      <div class="dev-profile">
+        <img src="images/shizu-profile.jpg"
+             alt="Shizu Karazaku profile portrait"
+             class="dev-avatar">
+        <div class="dev-info">
+          <p class="dev-kicker">CREATIVE DEVELOPER</p>
+          <h2>シズ カラザク</h2>
+          <p class="dev-role">Anime Web Developer · Creative Builder</p>
+          <p class="dev-bio">
+            I build immersive digital experiences inspired by anime,
+            futuristic interfaces, and interactive worlds. I turn
+            creative ideas into working projects, one line at a time.
+          </p>
+          <div class="dev-tags">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            <span>UI Design</span>
+          </div>
+        </div>
+      </div>
+      <div class="dev-project">
+        <div class="project-symbol">🌸</div>
+        <div>
+          <p class="dev-kicker">FEATURED PROJECT</p>
+          <h3>AnimeSlots</h3>
+          <p>A browser-based anime arcade featuring eight games, virtual credits, player progression, achievements, a shop, and immersive neon visuals.</p>
+        </div>
+        <span class="project-status">RELEASE READY</span>
+      </div>
+      <p class="dev-signature">「 Creating digital worlds, one idea at a time. 」</p>
+    </section>
+
+  </main>
+  <footer>🌸 ANIMESLOTS · Made for anime fans · Play for fun</footer>
+</body>
+</html>
